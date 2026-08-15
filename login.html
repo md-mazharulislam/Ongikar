@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <title>Login — Angikar</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <script src="main.js" defer></script>
+    <script src="login.js" defer></script>
+</head>
+<body class="auth-body">
+
+    <!-- Main card -->
+    <div class="auth-page">
+        <div class="auth-card">
+
+            <!-- Logo + tagline -->
+            <div class="auth-brand">
+                <div class="auth-logo-ring">
+                    <img src="ongikar.jpg" alt="Ongikar Logo" class="auth-logo-img">
+                </div>
+                <h1 class="auth-title">স্বাগতম!</h1>
+                <p class="auth-sub">আপনার অ্যাকাউন্টে লগইন করুন</p>
+            </div>
+
+            <!-- Form -->
+            <div class="auth-form" id="loginForm">
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-phone"></i> ফোন নম্বর</label>
+                    <input type="tel" id="loginPhone" class="field-input" placeholder="+880 1XXX XXXXXX" maxlength="14">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-lock"></i> পাসওয়ার্ড</label>
+                    <div class="input-eye-wrap">
+                        <input type="password" id="loginPassword" class="field-input" placeholder="পাসওয়ার্ড দিন">
+                        <button type="button" class="eye-btn" id="togglePass" tabindex="-1">
+                            <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe"> মনে রাখুন
+                    </label>
+                    <a href="#" class="forgot-link">পাসওয়ার্ড ভুলে গেছেন?</a>
+                </div>
+
+                <button class="auth-btn" id="loginBtn">
+                    <span id="loginBtnText">লগইন করুন</span>
+                    <span id="loginSpinner" class="btn-spinner hidden"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                </button>
+
+                <div class="auth-divider"><span>অথবা</span></div>
+
+                <!-- Google Login Button -->
+                <button type="button" class="auth-btn google-btn" id="googleLoginBtn">
+                    <i class="fa-brands fa-google"></i> <span>Google অ্যাকাউন্ট দিয়ে লগইন করুন</span>
+                </button>
+
+                <p class="auth-switch">
+                    অ্যাকাউন্ট নেই? <a href="signup.html">নতুন অ্যাকাউন্ট তৈরি করুন</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Bottom tagline -->
+        <p class="auth-footer-tag">"অক্ষুণ্ণ থাকুক মানবতা"</p>
+    </div>
+</body>
+</html>

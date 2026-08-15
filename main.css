@@ -1,0 +1,236 @@
+/* =========================================
+   main.css — Styles for all pages
+   ========================================= */
+   @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    --navbar-bg-color: #1B5E20;
+    --text-color: #000;
+    --logo-color: #ffa500;
+    --active-link-color: yellowgreen;
+    --close-btn-color: #d32f2f;
+}
+/* ── Layout ── */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+/* ── Header / Navbar ── */
+header {
+    background-color: var(--navbar-bg-color);
+}
+/* ── Logo ── */
+.logo {
+    font-weight: 700;
+    text-decoration: none;
+}
+.logo i {
+    font-size: 2.5rem;
+    font-style: normal;
+    color: var(--logo-color);
+}
+.logo:hover:not(.hover) {
+    background-color: var(--navbar-bg-color);
+}
+/* ── Dollar balance button ── */
+.dollar-balance {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: var(--logo-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 50px;
+    padding: 8px 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+/* ── Right side: dollar + hamburger ── */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+/* ── Navbar ── */
+.navbar {
+    position: sticky;
+    width: 100%;
+    height: 70px;
+    z-index: 1000;
+    background-color: var(--navbar-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 0 1rem;
+}
+/* ── Navbar Links ── */
+.navbar a {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: var(--navbar-bg-color);
+    text-decoration: none;
+    padding: 8px 16px;
+    position: relative;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li a {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: var(--text-color);
+}
+.navbar a:hover {
+    background-color: var(--active-link-color);
+}
+li.active a {
+    background-color: var(--active-link-color);
+}
+li a:hover:not(.active) {
+    background-color: var(--active-link-color);
+}
+/* ── hamburger menu ── */
+.menubar {
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+}
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+  background-color: var(--close-btn-color);
+}
+.change .bar2 {
+  opacity: 0;
+}
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-9px, -6px);
+  transform: rotate(45deg) translate(-9px, -6px);
+  background-color: var(--close-btn-color);
+}
+
+/* ── News Scrolling Ticker ── */
+.newsscrolling {
+    background-color: var(--navbar-bg-color);
+    color: #030303;
+    padding: 0.1rem 0;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    margin-right: 0%;
+}
+.newsscrolling span{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgb(224, 53, 53);
+    background-color: #70af70;
+    flex-shrink: 0;
+    padding: 0;
+    margin-right: 0;
+    position: relative;
+    top: -0.1rem;
+    clip-path: polygon(0% 0%, 85% 0%, 100% 100%, 0% 100%);
+}
+.news {
+    background-color: ;
+    display: inline-block;
+    animation: tickerScroll 20s linear infinite;
+}
+.news .text {
+    display: inline;
+    font-size: 1rem;
+    margin: 0;
+    padding-right: 4rem;
+    color: white;
+}
+/* ── News Scrolling Ticker end ── */
+
+/* ── device breakpoint styles ── */
+/* For mobile devices */
+@media (max-width: 768px) {
+    .header {
+        padding: 1.3rem 10%;
+    }
+    .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 60px;
+        padding: 0.5rem 1rem;
+        align-items: center;
+    }
+    .logo {
+        flex: 1;
+    }
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+    }
+    .navbar-collapse {
+        width: 100%;
+        order: 3;
+        margin-top: 0.25rem;
+    }
+    .navbar-collapse ul {
+        flex-direction: column !important;
+        width: 100%;
+        padding: 0;
+    }
+    .navbar-collapse ul li a {
+        padding: 10px 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        width: 100%;
+        display: block;
+    }
+    .icons {
+        display: block;
+    }
+    .dollar-balance {
+        font-size: 0.9rem;
+    }
+    #links {
+        background-color: var(--navbar-bg-color);
+        padding: 0.5rem 1rem;
+    }
+}
+/* For tablets and larger devices */
+@media (min-width: 769px) {
+    .navbar {
+        position: static; 
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: auto;
+        background-color: var(--navbar-bg-color);
+        box-shadow: none;
+        flex-wrap: nowrap;
+    }
+    .menubar {
+        display: none; /* বড় screen এ hamburger লুকানো */
+    }
+    .navbar a {
+        background-color: var(--navbar-bg-color);
+    }
+    .icons {
+        display: none;
+    }
+}

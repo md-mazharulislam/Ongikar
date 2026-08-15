@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <title>Sign Up — Angikar</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <script src="main.js" defer></script>
+    <script src="login.js" defer></script>
+</head>
+<body class="auth-body">
+
+    <!-- Main card -->
+    <div class="auth-page">
+        <div class="auth-card">
+
+            <!-- Logo + tagline -->
+            <div class="auth-brand">
+                <div class="auth-logo-ring">
+                    <img src="ongikar.jpg" alt="Ongikar Logo" class="auth-logo-img">
+                </div>
+                <h1 class="auth-title">স্বাগতম!</h1>
+                <p class="auth-sub">নতুন অ্যাকাউন্ট তৈরি করুন</p>
+            </div>
+
+            <!-- Form -->
+            <div class="auth-form" id="signupForm">
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-user"></i> পুরো নাম</label>
+                    <input type="text" id="signupName" class="field-input" placeholder="আপনার নাম লিখুন">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-phone"></i> ফোন নম্বর</label>
+                    <input type="tel" id="signupPhone" class="field-input" placeholder="+880 1XXX XXXXXX" maxlength="14">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-envelope"></i> ইমেইল</label>
+                    <input type="email" id="signupEmail" class="field-input" placeholder="email@example.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-lock"></i> পাসওয়ার্ড</label>
+                    <div class="input-eye-wrap">
+                        <input type="password" id="signupPassword" class="field-input" placeholder="পাসওয়ার্ড তৈরি করুন">
+                        <button type="button" class="eye-btn" id="togglePass" tabindex="-1">
+                            <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label"><i class="fa-solid fa-lock"></i> পাসওয়ার্ড নিশ্চিত করুন</label>
+                    <div class="input-eye-wrap">
+                        <input type="password" id="signupConfirm" class="field-input" placeholder="পুনরায় পাসওয়ার্ড দিন">
+                        <button type="button" class="eye-btn" id="toggleConfirm" tabindex="-1">
+                            <i class="fa-solid fa-eye" id="eyeIcon2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <label class="terms-check">
+                    <input type="checkbox" id="agreeTerms">
+                    আমি <a href="conditions.html" target="_blank">শর্তাবলী</a> পড়েছি এবং সম্মত আছি
+                </label>
+
+                <button class="auth-btn" id="signupBtn">
+                    <span id="signupBtnText">অ্যাকাউন্ট তৈরি করুন</span>
+                    <span id="signupSpinner" class="btn-spinner hidden"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                </button>
+
+                <div class="auth-divider"><span>অথবা</span></div>
+
+                <!-- Google Login Button -->
+                <button type="button" class="auth-btn google-btn" id="googleSignUpBtn">
+                    <i class="fa-brands fa-google"></i> <span>Google অ্যাকাউন্ট দিয়ে সাইনআপ করুন</span>
+                </button>
+
+                <p class="auth-switch">ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="login.html">লগইন করুন</a></p>
+            </div>
+        </div>
+
+        <!-- Bottom tagline -->
+        <p class="auth-footer-tag">"অক্ষুণ্ণ থাকুক মানবতা"</p>
+    </div>
+</body>
+</html>
