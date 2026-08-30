@@ -1,0 +1,87 @@
+services:
+  # ── MongoDB (bundled for local testing) ──
+  # Plain standalone MongoDB — deliberately kept simple and reliable for
+  # local development. The app's wallet-to-wallet transfer code prefers a
+  # replica set (needed for multi-document transactions) but automatically
+  # and safely falls back to sequential writes when it detects a standalone
+  # server (see backend/utils/withTransaction.js) — so this works correctly
+  # out of the box with zero extra setup.
+  #
+  # Want full transaction support locally, matching real Atlas? Use
+  # docker-compose.replica.yml instead (a single-node replica set) — see
+  # the README for details. Want to test against real cloud Atlas instead
+  # of any local container? Use docker-compose.atlas.yml.
+  mongo:
+    image: mongo:7
+    container_name: ongikar-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - ongikar_mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ── Mongo Express (web UI to browse the database) ──
+  # A simple web-based admin interface for MongoDB — browse databases,
+  # collections, and documents in your browser without a desktop app.
+  # Open http://localhost:8081 once everything is up. Protected by basic
+  # auth (see ME_BASICAUTH_USERNAME/PASSWORD in .env) — defaults are fine
+  # for local testing only, change them for anything beyond your own machine.
+  mongo-express:
+    image: mongo-express:latest
+    container_name: ongikar-mongo-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_BASICAUTH_USERNAME:-admin}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_BASICAUTH_PASSWORD:-admin123}
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+    ports:
+      - "${MONGO_EXPRESS_PORT:-8081}:8081"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ongikar-backend
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017/ongikar}
+      JWT_SECRET: ${JWT_SECRET:-change_this_to_a_long_random_secret}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
+      ADMIN_PHONE: ${ADMIN_PHONE:-+8801900000000}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
+      ADMIN_NAME: ${ADMIN_NAME:-Ongikar Admin}
+    ports:
+      - "${BACKEND_PORT:-5000}:5000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    container_name: ongikar-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend
+
+volumes:
+  ongikar_mongo_data:

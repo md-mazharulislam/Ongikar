@@ -1,0 +1,133 @@
+.admin-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 0;
+}
+.admin-tab {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.admin-tab.active { color: var(--forest); border-color: var(--gold); }
+.admin-tab:hover { color: var(--forest-dark); }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 1.2rem;
+  text-align: center;
+}
+.stat-card .num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--forest);
+  display: block;
+}
+.stat-card .label { font-size: 0.8rem; color: var(--ink-soft); margin-top: 4px; }
+
+.admin-table-wrap { overflow-x: auto; }
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.admin-table th, .admin-table td {
+  padding: 10px 14px;
+  text-align: right;
+  font-size: 0.86rem;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.admin-table th:first-child, .admin-table td:first-child,
+.admin-table th:nth-child(2), .admin-table td:nth-child(2) {
+  text-align: right;
+}
+.admin-table th { background: var(--cream-2); color: var(--forest-dark); font-weight: 700; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: var(--cream); }
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.badge-admin { background: var(--forest); color: var(--white); }
+.badge-member { background: var(--cream-2); color: var(--ink-soft); }
+.badge-active { background: #e6f4ea; color: var(--success); }
+.badge-inactive { background: #fbe9e7; color: var(--danger); }
+
+.icon-btn {
+  border: none;
+  background: var(--cream-2);
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--forest-dark);
+  margin-inline-start: 4px;
+}
+.icon-btn:hover { background: var(--gold-light); }
+.icon-btn.danger:hover { background: #fbe9e7; color: var(--danger); }
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.admin-search {
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+}
+.pagination button {
+  border: 1px solid var(--line);
+  background: var(--white);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+.pagination button:disabled { opacity: 0.4; }
+
+/* modal reused from Wallet.css naming so it visually matches */
+.admin-modal-form .field-group { margin-bottom: 0.8rem; }

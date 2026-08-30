@@ -1,0 +1,40 @@
+# Use this instead of docker-compose.yml when connecting to MongoDB Atlas
+# (or any managed/remote MongoDB) instead of a local container.
+#
+# Usage:
+#   1. In .env, set MONGO_URI to your Atlas connection string, e.g.
+#      MONGO_URI=mongodb+srv://user:pass@cluster0.xxxxx.mongodb.net/ongikar
+#   2. Run:
+#      docker compose -f docker-compose.atlas.yml up --build
+#
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ongikar-backend
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      MONGO_URI: ${MONGO_URI}
+      JWT_SECRET: ${JWT_SECRET:-change_this_to_a_long_random_secret}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
+      ADMIN_PHONE: ${ADMIN_PHONE:-+8801900000000}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
+      ADMIN_NAME: ${ADMIN_NAME:-Ongikar Admin}
+    ports:
+      - "${BACKEND_PORT:-5000}:5000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    container_name: ongikar-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend

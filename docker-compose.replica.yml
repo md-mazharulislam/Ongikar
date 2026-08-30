@@ -1,0 +1,98 @@
+# OPTIONAL / ADVANCED — use this instead of docker-compose.yml if you
+# specifically want full multi-document transaction support in your local
+# Mongo container (matching what real MongoDB Atlas provides). This runs
+# MongoDB as a single-node replica set.
+#
+# The default docker-compose.yml uses a plain standalone MongoDB instead —
+# simpler, and the app already handles the standalone case gracefully by
+# falling back to sequential (non-transactional) writes. Most people should
+# just use docker-compose.yml. Reach for this file only if you're
+# specifically testing/debugging transactional behavior locally.
+#
+# Usage:
+#   docker compose -f docker-compose.replica.yml up --build
+#
+services:
+  mongo:
+    image: mongo:7
+    container_name: ongikar-mongo
+    restart: unless-stopped
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - ongikar_mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  # One-shot job: initiates the replica set once, then exits. Safe to run
+  # every time you start the stack — it detects if it's already initiated.
+  mongo-init:
+    image: mongo:7
+    container_name: ongikar-mongo-init
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+    entrypoint: ["mongosh", "--host", "mongo:27017", "--eval"]
+    command: >
+      "try { rs.status(); print('replica set already initiated'); }
+       catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'mongo:27017' }] }); print('replica set initiated'); }"
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: ongikar-mongo-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/?replicaSet=rs0
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_BASICAUTH_USERNAME:-admin}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_BASICAUTH_PASSWORD:-admin123}
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+    ports:
+      - "${MONGO_EXPRESS_PORT:-8081}:8081"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ongikar-backend
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017/ongikar?replicaSet=rs0}
+      JWT_SECRET: ${JWT_SECRET:-change_this_to_a_long_random_secret}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
+      ADMIN_PHONE: ${ADMIN_PHONE:-+8801900000000}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
+      ADMIN_NAME: ${ADMIN_NAME:-Ongikar Admin}
+    ports:
+      - "${BACKEND_PORT:-5000}:5000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    container_name: ongikar-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend
+
+volumes:
+  ongikar_mongo_data:
