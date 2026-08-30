@@ -1,0 +1,28 @@
+.page-w {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 2.5rem;
+}
+.page-title { font-size: 1.7rem; margin-bottom: 4px; }
+.page-description { color: var(--ink-soft); margin-bottom: 1.5rem; }
+
+.settings-card { margin-bottom: 1.5rem; }
+.settings-card h2 { font-size: 1.1rem; margin-bottom: 1rem; }
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-label-wrap { flex: 1; min-width: 180px; }
+.setting-label { display: block; font-weight: 600; }
+.setting-description { font-size: 0.8rem; color: var(--ink-soft); }
+.setting-row .setting-input { max-width: 260px; }
+
+.danger-zone { border: 1.5px solid #f2c9c2; }
+.danger-zone h2 { color: var(--danger); }
